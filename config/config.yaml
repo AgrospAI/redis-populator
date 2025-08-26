@@ -1,0 +1,6 @@
+markdown:
+  url: "https://raw.githubusercontent.com/deltaDAO/pontusx-docs/refs/heads/main/pages/docs/participants-and-federators/ecosystem-participants.mdx"
+  key: "Public Address"
+
+redis:
+  url: "redis://localhost:6379"
