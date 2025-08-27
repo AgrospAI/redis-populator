@@ -3,6 +3,8 @@ use rustis::{
     client::Client,
     commands::{FlushingMode, HashCommands, ServerCommands},
 };
+use std::env;
+use std::path::Path;
 use std::sync::Arc;
 use std::time::Instant;
 use tokio::sync::Mutex;
@@ -10,19 +12,18 @@ use tokio::sync::Mutex;
 mod config;
 use crate::config::{Config, MarkdownConfig};
 
-#[macro_use]
-extern crate dotenv_codegen;
-
-fn setup() -> Config {
+fn setup() -> Result<Config, ()> {
     dotenv().ok();
 
-    let config_path: &str = dotenv!("CONFIG_PATH");
-    assert_ne!(config_path, "");
+    let config_path_str: String =
+        env::var("CONFIG_PATH").expect("CONFIG_PATH must be set in .env or environment");
 
-    Config::load(config_path).expect(&format!(
+    let config_path = Path::new(&config_path_str).join("config.yaml");
+
+    Ok(Config::load(&config_path).expect(&format!(
         "Failed to load configuration from {}",
-        config_path
-    ))
+        config_path.display()
+    )))
 }
 
 async fn get_markdown(url: &str) -> Result<Vec<String>, Box<dyn std::error::Error>> {
@@ -86,7 +87,7 @@ where
 #[tokio::main]
 async fn main() -> rustis::Result<()> {
     let start = Instant::now();
-    let config: Config = setup();
+    let config: Config = setup().expect("There was an error in the configuration setup");
 
     let client = Client::connect(config.redis.url).await?;
     client.flushdb(FlushingMode::Sync).await?;

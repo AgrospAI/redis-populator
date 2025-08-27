@@ -1,5 +1,6 @@
 use serde::Deserialize;
 
+use std::path::Path;
 use std::error::Error;
 use std::fs::File;
 
@@ -21,7 +22,7 @@ pub struct RedisConfig {
 }
 
 impl Config {
-    pub fn load(path: &str) -> Result<Self, Box<dyn Error>> {
+    pub fn load(path: &Path) -> Result<Self, Box<dyn Error>> {
         let file = File::open(path)?;
         let config: Config = serde_yaml::from_reader(file)?;
         Ok(config)
