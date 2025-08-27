@@ -1,0 +1,8 @@
+services:
+  populator:
+    build: .
+    environment:
+      CONFIG_PATH: /config
+    volumes:
+      - ./config:/config:ro
+      

@@ -3,4 +3,4 @@ markdown:
   key: "Public Address"
 
 redis:
-  url: "redis://localhost:6379"
+  url: "redis://host.docker.internal:6379"
