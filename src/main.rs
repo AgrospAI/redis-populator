@@ -1,7 +1,7 @@
 use dotenv::dotenv;
 use rustis::{
     client::Client,
-    commands::{ConnectionCommands, FlushingMode, HashCommands, ServerCommands},
+    commands::{FlushingMode, HashCommands, ServerCommands},
 };
 use std::env;
 use std::path::Path;
@@ -11,10 +11,6 @@ use tokio::sync::Mutex;
 
 mod data;
 use data::config::{Config, MarkdownConfig};
-
-use crate::data::config::RedisConfig;
-
-
 
 fn setup() -> Result<Config, ()> {
     dotenv().ok();
