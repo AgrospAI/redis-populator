@@ -28,6 +28,4 @@ redis:
 Future improvements (not in order):
 
 - Fetching auth.
-- Redis auth.
-- Local files implementation.
 - Parsing of more file formats.
