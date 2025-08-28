@@ -11,7 +11,7 @@ RUN apt update && \
     update-ca-certificates
 
 # Copy sources
-COPY .env Cargo.toml Cargo.lock ./
+COPY Cargo.toml Cargo.lock ./
 COPY src ./src
 
 RUN adduser \

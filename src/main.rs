@@ -1,7 +1,7 @@
 use dotenv::dotenv;
 use rustis::{
     client::Client,
-    commands::{FlushingMode, HashCommands, ServerCommands},
+    commands::{ConnectionCommands, FlushingMode, HashCommands, ServerCommands},
 };
 use std::env;
 use std::path::Path;
@@ -9,8 +9,12 @@ use std::sync::Arc;
 use std::time::Instant;
 use tokio::sync::Mutex;
 
-mod config;
-use crate::config::{Config, MarkdownConfig};
+mod data;
+use data::config::{Config, MarkdownConfig};
+
+use crate::data::config::RedisConfig;
+
+
 
 fn setup() -> Result<Config, ()> {
     dotenv().ok();
@@ -89,7 +93,7 @@ async fn main() -> rustis::Result<()> {
     let start = Instant::now();
     let config: Config = setup().expect("There was an error in the configuration setup");
 
-    let client = Client::connect(config.redis.url).await?;
+    let client = Client::connect(config.redis.url()).await?;
     client.flushdb(FlushingMode::Sync).await?;
 
     let markdown_lines = get_markdown(&config.markdown.url)

@@ -17,7 +17,9 @@ markdown:
   key: <Table key> # Will be used as Redis key
 
 redis:
-  url: <Redis URL>
+  base_url: <Redis URL>
+  username: Optional<Redis Username> # If username is set, password must be set too
+  password: Optional<Redis Password> # If password is set, username must be set too
 ```
 
 

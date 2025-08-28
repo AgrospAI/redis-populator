@@ -1,0 +1,21 @@
+services:
+  populator:
+    build:
+      dockerfile: Dockerfile
+      context: ..
+    environment:
+      CONFIG_PATH: /config
+      REDIS_BASE_URL: redis://redis:6379
+      REDIS_USER: ${REDIS_USER}
+      REDIS_PASS: ${REDIS_PASS}
+    volumes:
+      - ../config:/config:ro
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:6.2-alpine
+    restart: always
+    command: redis-server --save 20 1 --loglevel warning --requirepass ${REDIS_PASS}
+    volumes:
+      - ./data:/data

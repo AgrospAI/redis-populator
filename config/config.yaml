@@ -3,4 +3,7 @@ markdown:
   key: "Public Address"
 
 redis:
-  url: "redis://host.docker.internal:6379"
+  # base_url: "redis://host.docker.internal:6379"
+  base_url: ${REDIS_BASE_URL}
+  username: ${REDIS_USER}
+  password: ${REDIS_PASS}
